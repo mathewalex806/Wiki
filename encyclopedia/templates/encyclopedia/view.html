@@ -1,0 +1,33 @@
+{% extends "encyclopedia/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+{% if title_id not in entries %}
+<h1>404 : <h3>Whoops.. this page is currently unavailable</h3></h1>
+<p></p>
+<img src="https://static.wikia.nocookie.net/ipod/images/3/39/Sad_mac.jpg/revision/latest?cb=20130516190602" alt="Failed to load image">
+<p> </p>
+<div class="button">
+<a href="{% url 'index'%}">
+    <button type="button" class="btn btn-dark">Home</button>
+</a>
+</div>
+
+
+
+{%else%}
+
+    {{content|safe}}
+    <form action="{% url 'edit'%}" method="post">
+        {% csrf_token %}
+        <input type= "hidden" name="entry_title" value="{{title_id}}">
+        <input type= "submit" value="Edit" class="btn btn-dark">
+        
+        
+    </form>
+
+{%endif%}
+
+
+{% endblock %}
